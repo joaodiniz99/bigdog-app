@@ -1,9 +1,9 @@
 <template>
     <b-container fluid>
         <Titulo>Raças</Titulo>
-        <b-row v-if="loading">
+        <!-- <b-row v-if="loading">
             <Spinner/>
-        </b-row>
+        </b-row> -->
         <b-row>
             <DogCard v-for="dog in dogs" :key="dog.id" :dog="dog">
                 <b-button class="btn btn-info" type="button" v-b-modal.dogModal @click="setDogModal(dog)">+Info</b-button>
@@ -38,7 +38,6 @@
 import Titulo from '@/components/Titulo.vue';
 import DogCard from '@/components/DogCard.vue';
 import Spinner from '@/components/Spinner.vue';
-import DogService from '../services/DogService';
 import BackToTop from 'vue-backtotop';// Botão topo
 
 export default {
@@ -50,7 +49,7 @@ export default {
     },
     data() {
         return {
-            loading: true,
+            //loading: true,
             dogs: [],
             dog: null
         }
@@ -61,13 +60,7 @@ export default {
         }
     },
     created() {
-        DogService.getBreeds().then(res => {
-            this.dogs = res.data;
-            this.loading = !this.loading;
-        }).catch(err => {
-            alert('Ocorreu um erro! Verificar consola.');
-            console.log(err);
-        });
+        this.dogs = this.$store.state.dogs;
     }
 }
 </script>
