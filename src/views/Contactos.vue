@@ -47,7 +47,12 @@
 <script>
 import emailjs from 'emailjs-com';
 
+import Titulo from '@/components/Titulo.vue';
+
 export default {
+    components: {
+        Titulo
+    },
     name: 'Contactos',
     methods: {
         sendEmail(e) {
