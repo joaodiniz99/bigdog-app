@@ -1,10 +1,6 @@
 <template>
     <b-container fluid>
-        <div class="row">
-            <b-col class="text-center mt-4">
-                <h1><span id="tituloCao">Contactos</span></h1>
-            </b-col>
-        </div>
+        <Titulo>Contactos</Titulo>
         <b-row class="mt-3">
             <b-col cols="*" sm="*" md="4" lg="4" xl="4" class="text-center">
                 <img src="../assets/img/animation2.jpg" class="floating img-fluid">
@@ -71,15 +67,6 @@ export default {
 </script>
 
 <style scoped>
-.container-fluid h1 {
-  color: white;
-  font-size: 3rem;
-}
-
-.container-fluid #tituloCao {
-  border-bottom: 5px solid rgb(115, 193, 230);
-}
-
 /* Form */
 form {
   font-family: 'Poppins', sans-serif !important;
