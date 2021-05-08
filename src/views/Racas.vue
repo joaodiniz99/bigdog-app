@@ -2,9 +2,7 @@
     <b-container fluid>
         <Titulo>Raças</Titulo>
         <b-row v-if="loading">
-            <b-col class="text-center">
-                <b-spinner style="width: 5rem; height: 5rem;" class="my-5" label="Large Spinner" type="grow"></b-spinner>
-            </b-col>
+            <Spinner/>
         </b-row>
         <b-row>
             <DogCard v-for="dog in dogs" :key="dog.id" :dog="dog">
@@ -12,9 +10,9 @@
             </DogCard>        
         </b-row>
 
-        <back-to-top bottom="50px" right="50px">
+        <BackToTop bottom="50px" right="50px">
             <b-button type="button" class="btn btn-info btn-to-top"><i class="fa fa-chevron-up"></i></b-button>
-        </back-to-top>
+        </BackToTop>
 
         <!-- Modal -->
         <b-modal v-if="dog" id="dogModal" size="lg" centered hide-footer :title="dog.name">
@@ -25,8 +23,8 @@
                     </b-col>
                     <b-col cols="12" sm="6" md="6" lg="6" xl="6" class="my-3">
                         <p><span style="font-weight: 800;">Temperament:</span> {{ dog.temperament }} </p>
-                        <p><span style="font-weight: 800;">Weight:</span> {{ dog.weight.metric }} </p>
-                        <p><span style="font-weight: 800;">Height:</span> {{ dog.height.metric }} </p>
+                        <p><span style="font-weight: 800;">Weight:</span> {{ dog.weight.metric }} kg</p>
+                        <p><span style="font-weight: 800;">Height:</span> {{ dog.height.metric }} cm</p>
                         <p><span style="font-weight: 800;">Life Span:</span> {{ dog.life_span }} </p>
                     </b-col>
                 </b-row>
@@ -39,6 +37,7 @@
 <script>
 import Titulo from '@/components/Titulo.vue';
 import DogCard from '@/components/DogCard.vue';
+import Spinner from '@/components/Spinner.vue';
 import DogService from '../services/DogService';
 import BackToTop from 'vue-backtotop';// Botão topo
 
@@ -46,6 +45,7 @@ export default {
     components: {
         Titulo,
         DogCard,
+        Spinner,
         BackToTop
     },
     data() {

@@ -10,27 +10,28 @@
                 <img src="../assets/img/animation2.jpg" class="floating img-fluid">
             </b-col>
             <b-col cols="*" sm="*" md="4" lg="4" xl="4" >
-                <b-form>
+                <b-form ref="emailForm" @submit.prevent="sendEmail">
+                    <input type="hidden" name="contact_number">
                     <b-row>
                         <b-col>
                             <label for="firstName">Primeiro Nome</label>
-                            <input type="text" class="form-control" id="firstName" placeholder="João" required>
+                            <input type="text" class="form-control" id="firstName" placeholder="João" name="user_firstname" required>
                         </b-col>
                         <b-col>
                             <label for="lastName">Último Nome</label>
-                            <input type="text" class="form-control" id="lastName" placeholder="Diniz" required>
+                            <input type="text" class="form-control" id="lastName" placeholder="Diniz" name="user_lastname" required>
                         </b-col>
                     </b-row>
                     <b-row class="my-3">
                         <b-col>
                             <label for="email">Email</label>
-                            <input type="email" class="form-control" id="email" placeholder="2047920@um..." required>
+                            <input type="email" class="form-control" id="email" placeholder="2047920@um..." name="user_email" required>
                         </b-col>
                     </b-row>
                     <b-row class="my-3">
                         <b-col>
                             <label for="exampleFormControlTextarea1">Mensagem</label>
-                            <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" required></textarea>
+                            <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="message" required></textarea>
                         </b-col>
                     </b-row>
                     <b-row>
@@ -48,8 +49,24 @@
 </template>
 
 <script>
+import emailjs from 'emailjs-com';
+
 export default {
-    name: 'Contactos'
+    name: 'Contactos',
+    methods: {
+        sendEmail(e) {
+            e.target[0].value = Math.random() * 100000 | 0;
+            
+            emailjs.sendForm('contact_service', 'template_bvykz63', e.target, process.env.VUE_APP_EMAIL_USERID)
+                .then(res => {
+                    console.log('Success!', res.status, res.text);
+                    this.$refs.emailForm.reset();
+                })
+                .catch(err => {
+                    console.error('Failed...', err);
+                });
+        }
+    }
 }
 </script>
 
