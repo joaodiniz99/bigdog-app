@@ -45,7 +45,20 @@
 </template>
 
 <script>
-import emailjs from 'emailjs-com';
+import emailjs from 'emailjs-com';// Pacote de e-mails
+import { Notify } from 'notiflix';// Pacote de notificações
+// Configurações
+Notify.Init({ 
+  width: '300px',
+  position: 'right-bottom',
+  fontSize: '16px', 
+  timeout: 4000, 
+  messageMaxLength: 200,
+  showOnlyTheLastOne: true,
+  clickToClose: true,
+  pauseOnHover: true,
+  cssAnimationStyle: 'from-bottom'
+});
 
 import Titulo from '@/components/Titulo.vue';
 
@@ -61,10 +74,12 @@ export default {
             emailjs.sendForm('contact_service', 'template_bvykz63', e.target, process.env.VUE_APP_EMAIL_USERID)
                 .then(res => {
                     console.log('Success!', res.status, res.text);
+                    Notify.Success('E-mail enviado com sucesso! Entraremos em contacto consigo em breve! 🐺');
                     this.$refs.emailForm.reset();
                 })
                 .catch(err => {
                     console.error('Failed...', err);
+                    Notify.Failure('Ocorreu um erro ao enviar o e-mail. Tente novamente... 💥');
                 });
         }
     }

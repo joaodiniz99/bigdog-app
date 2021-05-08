@@ -68,7 +68,6 @@ export default {
             alert('Ocorreu um erro! Verificar consola.');
             console.log(err);
         });
-        this.setDogModal(this.dogs[0]);
     }
 }
 </script>
