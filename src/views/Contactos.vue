@@ -6,7 +6,7 @@
                 <img src="../assets/img/animation2.jpg" class="floating img-fluid">
             </b-col>
             <b-col cols="*" sm="*" md="4" lg="4" xl="4" >
-                <b-form ref="emailForm" @submit.prevent="sendEmail">
+                <b-form ref="emailForm" @submit.prevent="sendEmail" id="bigdogForm">
                     <input type="hidden" name="contact_number">
                     <b-row>
                         <b-col>
@@ -46,7 +46,7 @@
 
 <script>
 import emailjs from 'emailjs-com';// Pacote de e-mails
-import { Notify } from 'notiflix';// Pacote de notificações
+import { Notify, Block } from 'notiflix';// Pacote de notificações/loaders
 // Configurações
 Notify.Init({ 
   width: '300px',
@@ -69,17 +69,27 @@ export default {
     name: 'Contactos',
     methods: {
         sendEmail(e) {
+            // Adicionar loader
+            Block.Dots('#bigdogForm');
+
             e.target[0].value = Math.random() * 100000 | 0;
             
             emailjs.sendForm('contact_service', 'template_bvykz63', e.target, process.env.VUE_APP_EMAIL_USERID)
                 .then(res => {
                     console.log('Success!', res.status, res.text);
+                    // Adicionar Notificação de sucesso
                     Notify.Success('E-mail enviado com sucesso! Entraremos em contacto consigo em breve! 🐺');
-                    this.$refs.emailForm.reset();
+                    // Limpar formulário
+                    e.target.reset();
                 })
                 .catch(err => {
                     console.error('Failed...', err);
+                    // Adicionar Notificação de erro
                     Notify.Failure('Ocorreu um erro ao enviar o e-mail. Tente novamente... 💥');
+                })
+                .finally(() => {
+                    // Remover loader
+                    Block.Remove('#bigdogForm');
                 });
         }
     }
