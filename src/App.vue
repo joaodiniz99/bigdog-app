@@ -19,11 +19,11 @@ export default {
 * {
   margin: 0;
   padding: 0;
-  scroll-behavior: smooth;
+  /* scroll-behavior: smooth; */
 }
 
 body {
   font-family: 'Crimson Text', serif;
-  background-color: rgb(80, 135, 160);
+  background-color: rgb(68, 116, 138) !important;
 }
 </style>

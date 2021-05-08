@@ -9,10 +9,10 @@ const apiClient = axios.create({
 })
 
 export default {
-    getBreeds() {
-        return apiClient.get('/breeds'); // https://api.thedogapi.com/v1/breeds
-    },
-    // getById() {
-    //     return apiClient
-    // }
+  getBreeds() {
+      return apiClient.get('/breeds'); // https://api.thedogapi.com/v1/breeds
+  },
+  // getById() {
+  //     return apiClient
+  // }
 }

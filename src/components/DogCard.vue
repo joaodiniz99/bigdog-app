@@ -1,14 +1,13 @@
 <template>
-  <div class="col-xs-12 col-sm-6 col-md-3 col-lg-2 col-xl-2 my-3">
+  <b-col cols="12" sm="6" md="3" lg="2" xl="2" class="my-3">
     <div class="card__breed">
       <img class="img-fluid" :src="dog.image.url" :alt="dog.name" @click="redirectDog">
       <div class="card__container">
         <h5>{{ dog.name.length >= 15 ? dog.name.substr(0, 15)+"..." : dog.name }}</h5>
-        <!-- <button class="btn btn-info" type="button" :data-image="dog.image.url" :data-name="dog.name" :data-height="dog.height.metric" :data-life_span="dog.life_span" :data-temperament="dog.temperament" :data-weight="dog.weight.metric">+Info</button> -->
-        <button class="btn btn-info" type="button" disabled>+Info</button>
+        <slot></slot>
       </div>
     </div>
-  </div>
+  </b-col>
 </template>
 
 <script>
@@ -18,9 +17,6 @@
       dog: Object
     },
     methods: {
-      showModal(el) {
-        this.$emit('show-modal', el);
-      },
       redirectDog() {
         this.$router.push({
           name: 'breed',

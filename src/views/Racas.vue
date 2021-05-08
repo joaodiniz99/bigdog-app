@@ -7,11 +7,32 @@
             </b-col>
         </b-row>
         <b-row>
-            <DogCard v-for="dog in dogs" :key="dog.id" :dog="dog"/>
+            <DogCard v-for="dog in dogs" :key="dog.id" :dog="dog">
+                <b-button class="btn btn-info" type="button" v-b-modal.dogModal @click="setDogModal(dog)">+Info</b-button>
+            </DogCard>        
         </b-row>
-        <a href="#btnTopNav" id="btnTop" title="Go to top">
-            <i class="fas fa-arrow-up fa-2x"></i>
-        </a>
+
+        <back-to-top bottom="50px" right="50px">
+            <b-button type="button" class="btn btn-info btn-to-top"><i class="fa fa-chevron-up"></i></b-button>
+        </back-to-top>
+
+        <!-- Modal -->
+        <b-modal v-if="dog" id="dogModal" size="lg" centered hide-footer :title="dog.name">
+            <b-container fluid>
+                <b-row>
+                    <b-col cols="12" sm="6" md="6" lg="6" xl="6" id="dogModalDivImg">
+                        <img :src="dog.image.url" :alt="dog.name" class="img-fluid" id="dogModalImg">
+                    </b-col>
+                    <b-col cols="12" sm="6" md="6" lg="6" xl="6" class="my-3">
+                        <p><span style="font-weight: 800;">Temperament:</span> {{ dog.temperament }} </p>
+                        <p><span style="font-weight: 800;">Weight:</span> {{ dog.weight.metric }} </p>
+                        <p><span style="font-weight: 800;">Height:</span> {{ dog.height.metric }} </p>
+                        <p><span style="font-weight: 800;">Life Span:</span> {{ dog.life_span }} </p>
+                    </b-col>
+                </b-row>
+            </b-container>
+        </b-modal>
+
     </b-container>
 </template>
 
@@ -19,16 +40,24 @@
 import Titulo from '@/components/Titulo.vue';
 import DogCard from '@/components/DogCard.vue';
 import DogService from '../services/DogService';
+import BackToTop from 'vue-backtotop';// Botão topo
 
 export default {
     components: {
         Titulo,
-        DogCard
+        DogCard,
+        BackToTop
     },
     data() {
         return {
             loading: true,
-            dogs: []
+            dogs: [],
+            dog: null
+        }
+    },
+    methods: {
+        setDogModal(newDog) {
+            this.dog = newDog;
         }
     },
     created() {
@@ -38,60 +67,40 @@ export default {
         }).catch(err => {
             alert('Ocorreu um erro! Verificar consola.');
             console.log(err);
-        })
-    },
-    mounted() {
-        /* BACK TO TOP */
-        const botao = document.getElementById("btnTop");
-        console.log(botao);
-
-        function scrollFunction() {
-            if (document.body.scrollTop > 250 || document.documentElement.scrollTop > 250) {
-                botao.style.display = "block";
-            } else {
-                botao.style.display = "none";
-            }
-        }
-
-        window.onscroll = () => {scrollFunction()};
+        });
+        this.setDogModal(this.dogs[0]);
     }
 }
 </script>
 
 <style scoped>
-.container-fluid {
-    background-color: rgb(68, 116, 138) !important;
+/*
+ * Botão topo 
+ */
+.btn-to-top {
+  width: 60px;
+  height: 60px;
+  padding: 10px 16px;
+  border-radius: 50%;
+  font-size: 22px;
+  line-height: 22px;
 }
 
-/* Botão Top */
-#btnTop {
-  display: none;
-  position: fixed;
-  bottom: 20px;
-  right: 30px;
-  z-index: 99;
-  font-size: 1.5rem;
-  background-color: #138496;
-  color: white;
-  padding: 1rem;
-  border-radius: 10px;
-
-  transition: all 0.2s;
-  animation: btnTop 1s;
+/*
+ * Modal
+ */
+.modal-title {
+    margin: 0 auto !important;
+    font-size: 2rem !important;
 }
-
-#btnTop:hover {
-  background-color: white;
-  color: #138496;
+.modal-header .close {
+    display: none !important;
 }
-
-@keyframes btnTop {
-  0% {
-    opacity: 0;
-  }
-
-  100% {
-    opacity: 1;
-  }
+#dogModalDivImg {
+  text-align: center; 
+}
+#dogModalImg {
+  border-radius: 5px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.555);
 }
 </style>
