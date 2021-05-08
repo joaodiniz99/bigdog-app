@@ -1,7 +1,6 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
-import Racas from '../views/Racas.vue';
 
 Vue.use(VueRouter)
 
@@ -14,7 +13,7 @@ const routes = [
   {
     path: '/racas',
     name: 'racas',
-    component: Racas
+    component: () => import(/* webpackChunkName: "racas" */ '../views/Racas.vue')
   },
   {
     path: '/racas/:id',
