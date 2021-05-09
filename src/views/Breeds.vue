@@ -1,6 +1,6 @@
 <template>
     <b-container fluid>
-        <Titulo>Raças</Titulo>
+        <Title>Raças</Title>
         <!-- <b-row v-if="loading">
             <Spinner/>
         </b-row> -->
@@ -35,18 +35,19 @@
 </template>
 
 <script>
-import Titulo from '@/components/Titulo.vue';
+import Title from '@/components/Title.vue';
 import DogCard from '@/components/DogCard.vue';
 import Spinner from '@/components/Spinner.vue';
 import BackToTop from 'vue-backtotop';// Botão topo
 
 export default {
     components: {
-        Titulo,
+        Title,
         DogCard,
         Spinner,
         BackToTop
     },
+    name: 'Breeds',
     data() {
         return {
             //loading: true,

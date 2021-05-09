@@ -13,7 +13,7 @@ const routes = [
   {
     path: '/racas',
     name: 'racas',
-    component: () => import(/* webpackChunkName: "racas" */ '../views/Racas.vue')
+    component: () => import(/* webpackChunkName: "racas" */ '../views/Breeds.vue')
   },
   {
     path: '/racas/:id',
@@ -23,7 +23,7 @@ const routes = [
   {
     path: '/contactos',
     name: 'contactos',
-    component: () => import(/* webpackChunkName: "contactos" */ '../views/Contactos.vue')
+    component: () => import(/* webpackChunkName: "contactos" */ '../views/Contacts.vue')
   }
 ]
 

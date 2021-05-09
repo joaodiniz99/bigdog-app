@@ -1,6 +1,6 @@
 <template>
     <b-container fluid>
-        <Titulo>Contactos</Titulo>
+        <Title>Contactos</Title>
         <b-row class="mt-3">
             <b-col cols="*" sm="*" md="4" lg="4" xl="4" class="text-center">
                 <img src="../assets/img/animation2.jpg" class="floating img-fluid">
@@ -60,13 +60,13 @@ Notify.Init({
   cssAnimationStyle: 'from-bottom'
 });
 
-import Titulo from '@/components/Titulo.vue';
+import Title from '@/components/Title.vue';
 
 export default {
     components: {
-        Titulo
+        Title
     },
-    name: 'Contactos',
+    name: 'Contacts',
     methods: {
         sendEmail(e) {
             // Adicionar loader
