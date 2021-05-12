@@ -34,5 +34,8 @@ export default new Vuex.Store({
   modules: {
   },
   getters: {
+    getDogs: state => {
+      return state.dogs;
+    }
   }
 })

@@ -6,7 +6,7 @@
         </b-row> -->
         <b-row>
             <DogCard v-for="dog in dogs" :key="dog.id" :dog="dog">
-                <b-button class="btn btn-info" type="button" v-b-modal.dogModal @click="setDogModal(dog)">+Info</b-button>
+                <b-button class="btn btn-info" type="button" @click="setDogModal(dog)" v-b-modal.dogModal>+Info</b-button>
             </DogCard>        
         </b-row>
 
@@ -50,9 +50,8 @@ export default {
     name: 'Breeds',
     data() {
         return {
-            //loading: true,
-            dogs: [],
-            dog: null
+            dogs: null,// array of dogs
+            dog: null// object of dog
         }
     },
     methods: {

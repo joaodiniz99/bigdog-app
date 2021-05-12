@@ -3,7 +3,7 @@
     <div class="card__breed">
       <img class="img-fluid" :src="dog.image.url" :alt="dog.name" @click="redirectDog">
       <div class="card__container">
-        <h5>{{ dog.name.length >= 15 ? dog.name.substr(0, 15)+"..." : dog.name }}</h5>
+        <h5>{{ dogName }}</h5>
         <slot></slot>
       </div>
     </div>
@@ -24,6 +24,11 @@
         });
       }
     },
+    computed: {
+      dogName() {
+        return this.dog.name.length >= 15 ? this.dog.name.substr(0, 15)+"..." : this.dog.name;
+      }
+    }
   }
 </script>
 
@@ -44,6 +49,7 @@
   height: 200px;
   object-fit: cover;
   border-radius: 5px 5px 0 0;
+  cursor: pointer;
 
   filter: grayscale(100%);
   transition: 0.2s;

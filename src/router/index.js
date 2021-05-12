@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
+import Breeds from '../views/Breeds.vue'
 
 Vue.use(VueRouter)
 
@@ -13,7 +14,7 @@ const routes = [
   {
     path: '/racas',
     name: 'racas',
-    component: () => import(/* webpackChunkName: "racas" */ '../views/Breeds.vue')
+    component: Breeds
   },
   {
     path: '/racas/:id',
