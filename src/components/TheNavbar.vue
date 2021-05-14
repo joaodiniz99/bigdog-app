@@ -157,7 +157,7 @@ export default {
 #dropdownFav /deep/ .dropdown-menu {
   overflow-y: auto;
   overflow-x: hidden;
-  max-height: 300px !important;
+  max-height: 520px !important;
 }
 
 #favHeart {
