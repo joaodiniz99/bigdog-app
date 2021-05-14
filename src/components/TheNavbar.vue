@@ -12,7 +12,7 @@
         width="70"
         height="70"
         class="d-inline-block align-top"
-        alt="Kitten"
+        alt="Big Dog"
       />
       BIG DOG
     </router-link>

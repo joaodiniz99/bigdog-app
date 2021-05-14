@@ -46,19 +46,9 @@
 
 <script>
 import emailjs from 'emailjs-com';// Pacote de e-mails
-import { Notify, Block } from 'notiflix';// Pacote de notificações/loaders
-// Configurações
-Notify.Init({ 
-  width: '300px',
-  position: 'right-bottom',
-  fontSize: '16px', 
-  timeout: 4000, 
-  messageMaxLength: 200,
-  showOnlyTheLastOne: true,
-  clickToClose: true,
-  pauseOnHover: true,
-  cssAnimationStyle: 'from-bottom'
-});
+import Notify from '../configs/nofiflix.config';// configurações do pacote de notificações
+import { Block } from 'notiflix';// Pacote de notificações/loaders
+
 
 import Title from '@/components/Title.vue';
 

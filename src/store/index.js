@@ -1,19 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import DogService from '../services/DogService';
-import { Notify } from 'notiflix';// Pacote de notificações
-// Configurações
-Notify.Init({ 
-  width: '300px',
-  position: 'right-bottom',
-  fontSize: '16px', 
-  timeout: 4000, 
-  messageMaxLength: 200,
-  showOnlyTheLastOne: true,
-  clickToClose: true,
-  pauseOnHover: true,
-  cssAnimationStyle: 'from-bottom'
-});
+import Notify from '../configs/nofiflix.config';// configurações do pacote de notificações
 
 Vue.use(Vuex)
 
