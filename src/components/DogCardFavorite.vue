@@ -44,7 +44,7 @@ export default {
 
 .card__breed img {
   width: 100%;
-  height: 150px;
+  height: 250px;
   object-fit: cover;
   border-radius: 5px 5px 0 0;
 }
