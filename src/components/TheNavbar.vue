@@ -35,10 +35,10 @@
           toggle-class="text-decoration-none"
           no-caret
           right
-          id="favHeart"
+          id="dropdownFav"
         >
           <template #button-content>
-            <b-icon icon="suit-heart-fill" variant="danger" scale="1.3"></b-icon><span class="sr-only">Favoritos</span>
+            <b-icon id="favHeart" icon="suit-heart-fill" variant="danger" scale="1.3"></b-icon><span class="sr-only">Favoritos</span>
           </template>
           <b-row class="p-2" v-for="(favorite, index) in favorites" :key="index">
             <b-col class="text-center">
@@ -154,8 +154,10 @@ export default {
   }
 }
 
-.dropdown-menu {
-  padding: 50px !important;
+#dropdownFav /deep/ .dropdown-menu {
+  overflow-y: auto;
+  overflow-x: hidden;
+  max-height: 300px !important;
 }
 
 #favHeart {
@@ -170,7 +172,7 @@ export default {
   cursor: pointer;
 
   margin: 5px 0;
-  padding: 10px;
+  padding: 5px;
   border-radius: 25px;
   box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.555);
   transition: box-shadow 0.2s;
