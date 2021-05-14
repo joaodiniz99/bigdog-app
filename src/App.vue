@@ -1,16 +1,16 @@
 <template>
   <div id="app">
-    <Navbar/>
+    <TheNavbar/>
     <router-view/>
   </div>
 </template>
 
 <script>
-import Navbar from '@/components/Navbar.vue';
+import TheNavbar from '@/components/TheNavbar.vue';
 
 export default {
   components: {
-    Navbar
+    TheNavbar
   },
   mounted() {
     this.$store.dispatch('setDogs');

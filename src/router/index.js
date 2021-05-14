@@ -23,8 +23,13 @@ const routes = [
   },
   {
     path: '/contactos',
-    name: 'contactos',
-    component: () => import(/* webpackChunkName: "contactos" */ '../views/Contacts.vue')
+    name: 'contacts',
+    component: () => import(/* webpackChunkName: "contacts" */ '../views/Contacts.vue')
+  },
+  {
+    path: '*',
+    name: 'Not Found',
+    component: () => import(/* webpackChunkName: "notfound" */ '../views/NotFound.vue')
   }
 ]
 
