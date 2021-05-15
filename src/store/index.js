@@ -65,7 +65,7 @@ export default new Vuex.Store({
       return state.favorites;
     },
     getFavorite: state => img => {
-      return state.favorites.includes(img) ? 'suit-heart-fill' : 'suit-heart';
+      return state.favorites.includes(img) ? true : false;
     }
   }
 })
