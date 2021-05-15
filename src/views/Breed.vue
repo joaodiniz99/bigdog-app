@@ -1,6 +1,6 @@
 <template>
   <b-container fluid id="loading">
-    <Title> {{ name }} </Title>
+    <BaseTitle> {{ name }} </BaseTitle>
     <b-row class="my-5">
       <DogCardFavorite
         v-for="breed in result"
@@ -9,15 +9,15 @@
       />
     </b-row>
     <BackToTop bottom="50px" right="50px">
-      <b-button type="button" class="btn btn-info btn-to-top"
-        ><i class="fa fa-chevron-up"></i
-      ></b-button>
+      <b-button type="button" class="btn btn-info btn-to-top">
+        <i class="fa fa-chevron-up"></i>
+      </b-button>
     </BackToTop>
   </b-container>
 </template>
 
 <script>
-import Title from "@/components/Title.vue";
+import BaseTitle from "@/components/BaseTitle.vue";
 import DogCardFavorite from "@/components/DogCardFavorite.vue";
 import BackToTop from "vue-backtotop"; // Botão topo
 import DogService from "../services/DogService";
@@ -29,7 +29,7 @@ import { Block } from "notiflix";
 export default {
   name: "Breed",
   components: {
-    Title,
+    BaseTitle,
     DogCardFavorite,
     BackToTop,
   },
@@ -47,7 +47,8 @@ export default {
         this.name = res.data[0].breeds[0].name;
       })
       .catch((err) => {
-        console.error(err);
+        Notify.Failure("Ocorreu um erro! Tente mais tarde...");
+        console.log(err);
       })
       .finally(() => {
         //REMOVER LOADING

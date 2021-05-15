@@ -1,6 +1,7 @@
 <template>
   <b-container fluid>
-    <Title>Raças</Title>
+    <BaseTitle> Raças </BaseTitle>
+    <TheSearchBar/>
     <b-row>
       <DogCard v-for="dog in dogs" :key="dog.id" :dog="dog">
         <b-button
@@ -63,14 +64,16 @@
 </template>
 
 <script>
-import Title from "@/components/Title.vue";
+import BaseTitle from "@/components/BaseTitle.vue";
 import DogCard from "@/components/DogCard.vue";
+import TheSearchBar from '@/components/TheSearchBar.vue';
 import BackToTop from "vue-backtotop"; // Botão topo
 
 export default {
   components: {
-    Title,
+    BaseTitle,
     DogCard,
+    TheSearchBar,
     BackToTop,
   },
   name: "Breeds",

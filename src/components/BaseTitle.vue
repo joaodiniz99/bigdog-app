@@ -12,7 +12,7 @@
 
 <script>
 export default {
-    name: 'Title'
+    name: 'BaseTitle'
 }
 </script>
 

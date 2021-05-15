@@ -29,4 +29,12 @@ body {
   font-family: 'Crimson Text', serif;
   background-color: rgb(68, 116, 138) !important;
 }
+
+/*
+ * Remover sombra do coração depois de clicar
+ */
+#dropdownFav .btn:focus {
+  outline: none;
+  box-shadow: none;
+}
 </style>

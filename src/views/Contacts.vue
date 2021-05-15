@@ -1,6 +1,6 @@
 <template>
     <b-container fluid>
-        <Title>Contactos</Title>
+        <BaseTitle>Contactos</BaseTitle>
         <b-row class="mt-3">
             <b-col cols="*" sm="*" md="4" lg="4" xl="4" class="text-center">
                 <img src="../assets/img/animation2.jpg" class="floating img-fluid">
@@ -50,11 +50,11 @@ import Notify from '../configs/nofiflix.config';// configurações do pacote de 
 import { Block } from 'notiflix';// Pacote de notificações/loaders
 
 
-import Title from '@/components/Title.vue';
+import BaseTitle from '@/components/BaseTitle.vue';
 
 export default {
     components: {
-        Title
+        BaseTitle
     },
     name: 'Contacts',
     methods: {
