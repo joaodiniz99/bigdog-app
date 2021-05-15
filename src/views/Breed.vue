@@ -1,7 +1,7 @@
 <template>
   <b-container fluid id="loading">
     <Title> {{ name }} </Title>
-    <b-row>
+    <b-row class="my-5">
       <DogCardFavorite
         v-for="breed in result"
         :key="breed.id"
@@ -53,13 +53,7 @@ export default {
         //REMOVER LOADING
         Block.Remove('#loading');
       });
-  },
-  /*
-  computed: {
-    favorites() {
-      return this.$store.getters.getFavorites;
-    },
-  },*/
+  }
 };
 </script>
 

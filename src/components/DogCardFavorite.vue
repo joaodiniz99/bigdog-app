@@ -1,12 +1,10 @@
 <template>
-  <b-col cols="12" sm="6" md="4" lg="3" xl="3" class="my-5">
+  <b-col cols="12" sm="6" md="4" lg="3" xl="3" class="my-3">
     <div class="card__breed">
       <img class="img-fluid" :src="img" alt="Dog Card Image" />
-      <div class="card__container" :class="{ 'favorite' : isFavorite }">
-        <button class="card__container__fav" @click="sendFavorite(img)">
-          <b-icon :icon="favHeart" variant="danger" scale="1.3"></b-icon>
-        </button>
-      </div>
+      <button class="card__container__fav" :class="{ 'favorite' : isFavorite }" @click="sendFavorite(img)">
+        <b-icon :icon="favHeart" variant="danger" scale="1.6"></b-icon>
+      </button>
     </div>
   </b-col>
 </template>
@@ -39,8 +37,8 @@ export default {
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.555);
   border-radius: 5px;
 
-  width: 18rem;
-  max-height: 200px;
+  width: 100%;
+  max-height: 300px;
 
   transition: transform 0.2s;
   animation: breed 0.2s;
@@ -48,53 +46,38 @@ export default {
 
 .card__breed img {
   width: 100%;
-  height: 250px;
+  height: 300px;
   display: block;
   object-fit: cover;
   border-radius: 5px 5px 0 0;
 }
 
-.card__container {
-  text-align: center;
+.card__container__fav {
+  background-color: rgba(0, 0, 0, 0.3);
+  opacity: 0;
 
-  display: none;
-  /* background-color: lightgray; */
-  transform: translateY(-50px);
-  transition: 0.2s;
-}
+  position: absolute;
+  top: 0;
+  right: 20px;
 
-.favorite {
-  display: block;
-}
-
-.card__container .card__container__fav {
-  /* background-color: rgba(255, 255, 255, 0.6); */
   outline: none;
   border: 6px solid transparent;
   border-radius: 55px;
 
-  height: 35px;
-  width: 35px;
+  height: 40px;
+  width: 40px;
+
+  transition: 0.2s;
 }
 
-.card__breed:hover .card__container {
-  /* background-color: rgb(68, 116, 138) !important; */
-  display: block;
-  animation: favEntry 0.2s 0s ease-in;
+.favorite {
+  opacity: 1;
+  top: 5px;
 }
 
-@keyframes favEntry {
-  0% {
-    opacity: 0;
-    transform: translateY(0);
-  }
-  95% {
-    transform: translateY(-55px);
-  }
-  100% {
-    opacity: 1;
-    transform: translateY(-50px);
-  }
+.card__breed:hover .card__container__fav {
+  top: 5px;
+  opacity: 1;
 }
 
 @keyframes breed {
