@@ -41,19 +41,19 @@
           </b-col>
           <b-col cols="12" sm="6" md="6" lg="6" xl="6" class="my-3">
             <p>
-              <span style="font-weight: 800">Temperament:</span>
+              <span style="font-weight: 800">Temperamento:</span>
               {{ dog.temperament }}
             </p>
             <p>
-              <span style="font-weight: 800">Weight:</span>
+              <span style="font-weight: 800">Peso:</span>
               {{ dog.weight.metric }} kg
             </p>
             <p>
-              <span style="font-weight: 800">Height:</span>
+              <span style="font-weight: 800">Altura:</span>
               {{ dog.height.metric }} cm
             </p>
             <p>
-              <span style="font-weight: 800">Life Span:</span>
+              <span style="font-weight: 800">Tempo de vida:</span>
               {{ dog.life_span }}
             </p>
           </b-col>
