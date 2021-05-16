@@ -1,9 +1,9 @@
 <template>
   <b-container fluid>
     <BaseTitle> Raças </BaseTitle>
-    <TheSearchBar/>
+    <TheSearchBar @searchChange="searchBreed"/>
     <b-row>
-      <DogCard v-for="dog in dogs" :key="dog.id" :dog="dog">
+      <DogCard v-for="dog in filteredDogs" :key="dog.id" :dog="dog">
         <b-button
           class="btn btn-info"
           type="button"
@@ -81,15 +81,26 @@ export default {
     return {
       dogs: null, // array of dogs
       dog: null, // object of dog
-    };
+      search: ""
+    }
   },
   methods: {
     setDogModal(newDog) {
       this.dog = newDog;
     },
+    searchBreed(name) {
+      this.search = name;
+    }
   },
   created() {
     this.dogs = this.$store.state.dogs;
+  },
+  computed: {
+    filteredDogs() {
+      return this.dogs.filter(dog => {
+        return dog.name.toLowerCase().includes(this.search.toLowerCase());
+      });
+    }
   },
 };
 </script>

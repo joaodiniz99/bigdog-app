@@ -46,8 +46,8 @@
                 :src="favorite"
                 alt="Favorite image"
                 class="img-fluid favoriteImage"
-                @click="setFavorite(favorite)"
               />
+              <b-icon icon="x-circle-fill" scale="1.5" variant="danger" class="favCloseBtn" @click="removeFavorite(favorite)"></b-icon>
             </b-col>
           </b-row>
         </b-dropdown>
@@ -67,7 +67,7 @@
 export default {
   name: "TheNavbar",
   methods: {
-    setFavorite(img) {
+    removeFavorite(img) {
       this.$store.dispatch("toggleFavorite", img);
     },
   },
@@ -132,7 +132,7 @@ export default {
 }
 
 /*
-    Favorite Dropdown
+  Favorite Dropdown
 */
 @keyframes heartEntry {
   0% {
@@ -154,22 +154,29 @@ export default {
   }
 }
 
+/*
+ * Add scroll y 
+ */
 #dropdownFav /deep/ .dropdown-menu {
   overflow-y: auto;
   overflow-x: hidden;
   max-height: 520px !important;
 }
 
+/*
+ * Heart Button 
+ */
 #favHeart {
   animation: heartEntry 1s 0s ease-in;
 }
 
+/*
+ * Favorite image 
+ */
 .favoriteImage {
   width: 150px;
   height: 100px;
   object-fit: cover;
-
-  cursor: pointer;
 
   margin: 5px 0;
   padding: 5px;
@@ -178,7 +185,14 @@ export default {
   transition: box-shadow 0.2s;
 }
 
-.favoriteImage:hover {
-  box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.333);
+/*  
+ * Remove Favorite Button
+ */
+.favCloseBtn {
+  position: absolute;
+  top: 5px;
+  right: 15px;
+
+  cursor: pointer;
 }
 </style>
