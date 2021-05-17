@@ -1,5 +1,5 @@
 <template>
-  <b-col cols="12" sm="6" md="3" lg="2" xl="2" class="my-3">
+  <b-col cols="12" sm="6" md="3" lg="3" xl="2" class="my-3">
     <div class="card__breed">
       <img class="img-fluid" :src="dog.image.url" :alt="dog.name" @click="redirectDog">
       <div class="card__container">
