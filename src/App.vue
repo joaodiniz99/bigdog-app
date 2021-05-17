@@ -14,6 +14,7 @@ export default {
   },
   created() {
     this.$store.dispatch('setDogs');
+    this.$store.dispatch('setFavorites');
   }
 }
 </script>

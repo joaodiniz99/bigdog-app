@@ -16,11 +16,16 @@ export default new Vuex.Store({
     },
     SET_FAVORITE(state, payload) {
       state.favorites.unshift(payload.img);
+      localStorage.setItem('favsInfo', JSON.stringify(state.favorites));
       Notify.Success("Cão adicionado aos favoritos!");
     },
     REMOVE_FAVORITE(state, payload) {
       state.favorites.splice(payload.index, 1);
+      localStorage.setItem('favsInfo', JSON.stringify(state.favorites));
       Notify.Success("Cão removido dos favoritos!");
+    },
+    START_FAVORITES(state, payload) {
+      state.favorites = payload.favorites;
     }
   },
   actions: {
@@ -42,7 +47,18 @@ export default new Vuex.Store({
         });
       }
     },
+    setFavorites({ commit }) {
+      const favoritesLocalStorage = localStorage.getItem('favsInfo');
+      if(!favoritesLocalStorage) {
+        localStorage.setItem('favsInfo', '[]');
+      } else {
+        commit('START_FAVORITES', {
+          favorites: JSON.parse(favoritesLocalStorage)
+        });
+      }
+    },
     toggleFavorite({ commit, state }, img) {
+      
       if(!state.favorites.includes(img)) {// se a imagem n existir dentro dos favoritos, ele acrescenta
         commit('SET_FAVORITE', {
           img: img
@@ -53,6 +69,7 @@ export default new Vuex.Store({
           index: index
         });
       }
+      
     }
   },
   modules: {
