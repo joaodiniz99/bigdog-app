@@ -1,5 +1,10 @@
 <template>
-  <b-container fluid id="loading">
+  <b-container fluid>
+    <b-row v-if="loading">
+      <b-col id="loading">
+        <b-spinner style="width: 3rem; height: 3rem;" label="Loading..."></b-spinner>
+      </b-col>
+    </b-row>
     <BaseTitle> {{ name }} </BaseTitle>
     <b-row class="my-5">
       <DogCardFavorite
@@ -24,7 +29,6 @@ import DogService from "../services/DogService";
 
 // Pacote de notificações/loaders
 import Notify from "../configs/nofiflix.config";
-import { Block } from "notiflix";
 
 export default {
   name: "Breed",
@@ -37,12 +41,12 @@ export default {
     return {
       result: null, // array of breed
       name: null, // name of breed
+      loading: true
     };
   },
   created() {
     DogService.getImagesById(this.$route.params.id)
       .then((res) => {
-        Block.Standard('#loading');
         this.result = res.data;
         this.name = res.data[0].breeds[0].name;
       })
@@ -52,7 +56,7 @@ export default {
       })
       .finally(() => {
         //REMOVER LOADING
-        Block.Remove('#loading');
+        this.loading = false;
       });
   }
 };
@@ -69,5 +73,16 @@ export default {
   border-radius: 50%;
   font-size: 22px;
   line-height: 22px;
+}
+
+#loading {
+  text-align: center;
+  height: 50vh;
+  width: 99vw;
+}
+
+#loading span {
+  position: absolute;
+  top: 50%;
 }
 </style>
