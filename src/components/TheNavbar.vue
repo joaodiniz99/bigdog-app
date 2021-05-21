@@ -25,8 +25,8 @@
         <router-link to="/" class="nav-link nav-item">Inicio</router-link>
         <router-link to="/racas" class="nav-link nav-item">Raças</router-link>
         <!-- <router-link to="/galeria" class="nav-link nav-item">Galeria</router-link> -->
-        <router-link to="/contactos" class="nav-link nav-item">Contactos</router-link>
         <router-link to="/favoritos" class="nav-link nav-item">Favoritos</router-link>
+        <router-link to="/contactos" class="nav-link nav-item">Contactos</router-link>
 
         <b-dropdown
           v-if="favLength"
