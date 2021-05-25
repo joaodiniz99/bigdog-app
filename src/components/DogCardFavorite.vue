@@ -91,4 +91,11 @@ export default {
     transform: translateX(0);
   }
 }
+
+@media only screen and (max-width: 768px) {
+  .card__container__fav {
+    top: 5px;
+    opacity: 1;
+  }
+}
 </style>

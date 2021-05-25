@@ -9,10 +9,10 @@
         </b-row>
         <b-row class="my-5" v-else>
             <b-col class="text-center">
-                <h1 class="mb-5">A lista dos favoritos está vazia...🐕😢</h1>
+                <h1 class="mb-5">A lista dos favoritos está vazia...</h1>
                 <router-link to="/racas" title="Retornar para a página das raças">
                     <b-button variant="info">
-                        Adicione alguma raça à sua lista 🐕‍🦺🙋
+                        Adicione alguma raça à sua lista 🙋‍♂️
                     </b-button>
                 </router-link>
             </b-col>
