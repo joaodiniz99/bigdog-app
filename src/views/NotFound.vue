@@ -1,8 +1,13 @@
 <template>
     <b-container fluid class="text-center">
-        <b-row>
+        <!-- <b-row>
             <b-col class="my-5">
                 <b-icon icon="signpost-split" scale="5" class="notFoundIcon"></b-icon>
+            </b-col>
+        </b-row> -->
+        <b-row>
+            <b-col class="mt-5 mb-3">
+                <img src="../assets/img/404.jpg" width="450" height="300" class="img-fluid" alt="404 image">
             </b-col>
         </b-row>
         <b-row>
@@ -44,5 +49,10 @@ export default {
 
 .notFoundIcon {
     animation: notFoundEntry 2s 0s ease-in-out infinite;
+}
+
+img {
+    animation: notFoundEntry 3s 0s ease-in-out infinite;
+    border-radius: 25px;
 }
 </style>
