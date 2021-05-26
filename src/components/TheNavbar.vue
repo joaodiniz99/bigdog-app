@@ -27,6 +27,7 @@
         <!-- <router-link to="/galeria" class="nav-link nav-item">Galeria</router-link> -->
         <router-link to="/favoritos" class="nav-link nav-item">Favoritos</router-link>
         <router-link to="/contactos" class="nav-link nav-item">Contactos</router-link>
+        <router-link to="/login" class="nav-link nav-item">Iniciar Sessão</router-link>
 
         <b-dropdown
           v-if="favLength"
