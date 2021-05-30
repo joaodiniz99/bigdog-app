@@ -1,9 +1,8 @@
 <template>
     <b-container>
-        <b-row class="my-4">
-            <b-col class="text-center">
-                <img src="../assets/logo.png" width="70" height="70" alt="Big Dog Logo" class="img-fluid">
-            </b-col>
+        <b-row class="my-4" id="paiModelo">  
+            <!-- <model-gltf id="modelo" backgroundColor="#44748a" :rotation="rotation" :width="200" :height="200" @on-load="onLoad" src="/models/Mars_1_6792.glb"></model-gltf> -->
+            <model-gltf id="modelo" :lights="lights" backgroundColor="#44748a" :width="200" :height="200" src="/models/Earth_1_12756.glb"></model-gltf>
         </b-row>
         <b-row>
             <b-col class="text-center">
@@ -44,6 +43,8 @@
 </template>
 
 <script>
+import { ModelGltf, ModelObj } from 'vue-3d-model';
+
 export default {
     name: 'Login',
     data() {
@@ -51,14 +52,42 @@ export default {
             form: {
                 email: '',
                 password: ''
-            }
+            },
+            rotation: {
+                x: 0,
+                y: 0,
+                z: 0
+            },
+            lights: [
+                {
+                    type: 'AmbientLight',
+                    color: 0xffffff,
+                    intensity: 1
+                },
+                {
+                    type: 'DirectionalLight',
+                    color: 0xffffff,
+                    intensity: 1
+                }
+            ]
         }
+    },
+    components: {
+        ModelObj,
+        ModelGltf
     },
     methods: {
         iniciarSessao() {
             alert(JSON.stringify(this.form));
             this.form.email = '';
             this.form.password = '';
+        },
+        onLoad () {
+            this.rotate();
+        },
+        rotate () {
+            this.rotation.y += 0.002;
+            requestAnimationFrame( this.rotate );
         }
     }
 }
@@ -123,11 +152,22 @@ img {
     font-size: 24px;
     animation: titleEntry 0.2s 0s ease-in;
 }
+
 form {
     background-color: rgb(56, 97, 116);
     padding: 20px;
     border-radius: 10px;
     font-size: 14px;
     animation: formEntry 0.2s 0s ease-in;
+}
+
+#paiModelo {
+    display: flex;
+    justify-content: center;
+}
+
+#modelo {
+    width: 200px !important;
+    height: 200px !important;
 }
 </style>
