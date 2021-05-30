@@ -1,9 +1,15 @@
 <template>
     <b-container>
-        <b-row class="my-4" id="paiModelo">  
-            <!-- <model-gltf id="modelo" backgroundColor="#44748a" :rotation="rotation" :width="200" :height="200" @on-load="onLoad" src="/models/Mars_1_6792.glb"></model-gltf> -->
-            <model-gltf id="modelo" :lights="lights" backgroundColor="#44748a" :width="200" :height="200" src="/models/Earth_1_12756.glb"></model-gltf>
+        <b-row class="text-center my-4">
+            <b-col>
+                <img src="../assets/logo.png" width="70" height="70" alt="Logo image">
+            </b-col>
         </b-row>
+        <!-- <b-row class="my-4" id="paiModelo">   -->
+            <!-- <model-gltf id="modelo" backgroundColor="#44748a" :rotation="rotation" :width="200" :height="200" @on-load="onLoad" src="/models/Mars_1_6792.glb"></model-gltf> -->
+            <!-- <model-gltf id="modelo" :lights="lights" backgroundColor="#44748a" :width="200" :height="200" src="/models/Earth_1_12756.glb"></model-gltf> -->
+            <!-- <model-fbx id="modelo" :lights="lights" :rotation="rotation" backgroundColor="#44748a" :width="200" :height="200" src="/models/dog.fbx"></model-fbx> -->
+        <!-- </b-row> -->
         <b-row>
             <b-col class="text-center">
                 <h1 class="title">Iniciar sessão no Big Dog</h1>
@@ -43,7 +49,7 @@
 </template>
 
 <script>
-import { ModelGltf, ModelObj } from 'vue-3d-model';
+// import { ModelGltf, ModelObj, ModelFbx } from 'vue-3d-model';
 
 export default {
     name: 'Login',
@@ -53,6 +59,7 @@ export default {
                 email: '',
                 password: ''
             },
+            /*
             rotation: {
                 x: 0,
                 y: 0,
@@ -69,12 +76,15 @@ export default {
                     color: 0xffffff,
                     intensity: 1
                 }
-            ]
+            ]*/
         }
     },
     components: {
+        /*
         ModelObj,
-        ModelGltf
+        ModelGltf,
+        ModelFbx
+        */
     },
     methods: {
         iniciarSessao() {
