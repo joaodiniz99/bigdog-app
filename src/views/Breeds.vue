@@ -79,6 +79,7 @@ export default {
   name: "Breeds",
   data() {
     return {
+      dogs: [],
       dog: null, // object of dog
       search: ""
     }
