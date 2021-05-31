@@ -79,6 +79,7 @@ export default {
   name: "Breeds",
   data() {
     return {
+      dogs: null, // array of dogs
       dog: null, // object of dog
       search: ""
     }
@@ -91,16 +92,17 @@ export default {
       this.search = name;
     }
   },
+  created() {
+    this.dogs = this.$store.state.dogs;
+  },
   computed: {
-    dogs() {
-      return this.$store.getters.getDogs;
-    },
+    // dogs() {
+    //   return this.$store.getters.getDogs;
+    // },
     filteredDogs() {
-      if(this.dogs) {
-        return this.dogs.filter(dog => {
-          return dog.name.toLowerCase().includes(this.search.toLowerCase());
-        });
-      }
+      return this.dogs.filter(dog => {
+        return dog.name.toLowerCase().includes(this.search.toLowerCase());
+      });
     }
   },
 };
