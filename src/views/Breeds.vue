@@ -79,7 +79,6 @@ export default {
   name: "Breeds",
   data() {
     return {
-      dogs: [],
       dog: null, // object of dog
       search: ""
     }
@@ -97,9 +96,11 @@ export default {
       return this.$store.getters.getDogs;
     },
     filteredDogs() {
-      return this.dogs.filter(dog => {
-        return dog.name.toLowerCase().includes(this.search.toLowerCase());
-      });
+      if(this.dogs) {
+        return this.dogs.filter(dog => {
+          return dog.name.toLowerCase().includes(this.search.toLowerCase());
+        });
+      }
     }
   },
 };
