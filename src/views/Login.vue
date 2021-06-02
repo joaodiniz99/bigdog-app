@@ -82,11 +82,14 @@ export default {
             })
                 .then(user => {
                     Notify.Success("Sessão iniciada com sucesso!");
+                    this.$store.commit('SET_USER', {
+                        user: user.data
+                    });
                     this.$router.push('racas');
                     console.log(user.data);
                 })
                 .catch(err => {
-                    Notify.Failure("Ocorreu um erro na criação da conta. Tente mais tarde!");
+                    Notify.Failure("Ocorreu um erro ao iniciar sessão. Tente mais tarde!");
                     console.log(err);
                 })
                 .finally(() => {

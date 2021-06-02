@@ -22,7 +22,7 @@
           name: 'breed',
           params: { id: this.dog.id }
         })
-        .catch(() => {});
+        .catch(() => {});// este catch serve para impedir que haja erro na consola por causa do Navigation Guard
       }
     },
     computed: {
