@@ -5,11 +5,6 @@
                 <img src="../assets/logo.png" width="70" height="70" alt="Logo image">
             </b-col>
         </b-row>
-        <!-- <b-row class="my-4" id="paiModelo">   -->
-            <!-- <model-gltf id="modelo" backgroundColor="#44748a" :rotation="rotation" :width="200" :height="200" @on-load="onLoad" src="/models/Mars_1_6792.glb"></model-gltf> -->
-            <!-- <model-gltf id="modelo" :lights="lights" backgroundColor="#44748a" :width="200" :height="200" src="/models/Earth_1_12756.glb"></model-gltf> -->
-            <!-- <model-fbx id="modelo" :lights="lights" :rotation="rotation" backgroundColor="#44748a" :width="200" :height="200" src="/models/dog.fbx"></model-fbx> -->
-        <!-- </b-row> -->
         <b-row>
             <b-col class="text-center">
                 <h1 class="title">Iniciar sessão no Big Dog</h1>
@@ -42,14 +37,29 @@
                     required
                     ></b-form-input>
                 </b-form-group>
-                <b-button type="submit" variant="info" class="btn-block">Login</b-button>
+                <b-overlay
+                    :show="loading"
+                    rounded
+                    opacity="0.6"
+                    spinner-small
+                    spinner-variant="primary"
+                    class="d-block"
+                >
+                    <b-button type="submit" variant="info" class="btn-block">Iniciar Sessão</b-button>
+                </b-overlay>
             </b-form>
+        </b-row>
+        <b-row>
+            <b-col class="text-center" style="color: white;">
+                <p>Não tem conta? <router-link to="/signup">Criar Conta</router-link></p>
+            </b-col>
         </b-row>
     </b-container>
 </template>
 
 <script>
-// import { ModelGltf, ModelObj, ModelFbx } from 'vue-3d-model';
+import axios from 'axios';
+import Notify from '../configs/nofiflix.config';// configurações do pacote de notificações
 
 export default {
     name: 'Login',
@@ -59,45 +69,31 @@ export default {
                 email: '',
                 password: ''
             },
-            /*
-            rotation: {
-                x: 0,
-                y: 0,
-                z: 0
-            },
-            lights: [
-                {
-                    type: 'AmbientLight',
-                    color: 0xffffff,
-                    intensity: 1
-                },
-                {
-                    type: 'DirectionalLight',
-                    color: 0xffffff,
-                    intensity: 1
-                }
-            ]*/
+            loading: false
         }
-    },
-    components: {
-        /*
-        ModelObj,
-        ModelGltf,
-        ModelFbx
-        */
     },
     methods: {
         iniciarSessao() {
-            alert(JSON.stringify(this.form));
-            this.form.email = '';
-            this.form.password = '';
-        },
-        onLoad () {
-            this.rotate();
-        },
-        rotate () {
-            this.rotation.y += 0.002;
-            requestAnimationFrame( this.rotate );
+            this.loading = true;
+            axios.post('https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyCqzbIw1no8yqShY7YErnWuBeaQzvElGS8', {
+                email: this.form.email,
+                password: this.form.password,
+                returnSecureToken: true
+            })
+                .then(user => {
+                    Notify.Success("Sessão iniciada com sucesso!");
+                    this.$router.push('racas');
+                    console.log(user.data);
+                })
+                .catch(err => {
+                    Notify.Failure("Ocorreu um erro na criação da conta. Tente mais tarde!");
+                    console.log(err);
+                })
+                .finally(() => {
+                    this.loading = false;
+                    this.form.email = '';
+                    this.form.password = '';
+                });
         }
     }
 }
@@ -171,13 +167,4 @@ form {
     animation: formEntry 0.2s 0s ease-in;
 }
 
-#paiModelo {
-    display: flex;
-    justify-content: center;
-}
-
-#modelo {
-    width: 200px !important;
-    height: 200px !important;
-}
 </style>

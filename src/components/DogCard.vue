@@ -21,7 +21,8 @@
         this.$router.push({
           name: 'breed',
           params: { id: this.dog.id }
-        });
+        })
+        .catch(() => {});
       }
     },
     computed: {

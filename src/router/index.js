@@ -3,7 +3,11 @@ import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
 import Breeds from '../views/Breeds.vue'
 
+import Notify from '../configs/nofiflix.config'// configurações do pacote de notificações
+
 Vue.use(VueRouter)
+
+import store from '../store'
 
 const routes = [
   {
@@ -19,7 +23,15 @@ const routes = [
   {
     path: '/racas/:id',
     name: 'breed',
-    component: () => import(/* webpackChunkName: "breed" */ '../views/Breed.vue')
+    component: () => import(/* webpackChunkName: "breed" */ '../views/Breed.vue'),
+    beforeEnter: (to, from, next) => {
+      if(!store.state.user) {
+        next('/login');
+        Notify.Failure("É necessário ter a sessão iniciada para aceder às imagens.");
+      } else {
+        next();
+      }
+    }
   },
   {
     path: '/contactos',
@@ -34,7 +46,12 @@ const routes = [
   {
     path: '/login',
     name: 'login',
-    component: () => import(/* webpackChunkName: "login" */ '../views/Login.vue')
+    component: () => import(/* webpackChunkName: "auth" */ '../views/Login.vue')
+  },
+  {
+    path: '/signup',
+    name: 'signup',
+    component: () => import(/* webpackChunkName: "auth" */ '../views/Signup.vue')
   },
   {
     path: '*',

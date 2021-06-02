@@ -8,7 +8,8 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     dogs: [],
-    favorites: []
+    favorites: [],
+    user: null
   },
   mutations: {
     SET_DOGS(state, payload) {
@@ -26,6 +27,9 @@ export default new Vuex.Store({
     },
     START_FAVORITES(state, payload) {
       state.favorites = payload.favorites;
+    },
+    SET_USER(state, payload) {
+      state.user = payload.user;
     }
   },
   actions: {
