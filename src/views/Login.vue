@@ -74,20 +74,25 @@ export default {
     },
     methods: {
         login() {
-            this.loading = true;
-            this.$store.dispatch('login', {
-                email: this.form.email,
-                password: this.form.password,
-                returnSecureToken: true
-            }).then(() => {
-                Notify.Success("Sessão iniciada com sucesso!");
-                this.$router.back();
-            }).catch(err => {
-                Notify.Failure("Ocorreu um erro! Tente mais tarde.");
-                console.log(err);
-            }).finally(() => {
-                this.loading = false;
-            });
+            if(this.form.password.length >= 6) {
+                this.loading = true;
+                this.$store.dispatch('login', {
+                    email: this.form.email,
+                    password: this.form.password,
+                    returnSecureToken: true
+                }).then(() => {
+                    Notify.Success("Sessão iniciada com sucesso!");
+                    this.$router.back();
+                }).catch(err => {
+                    Notify.Failure("Ocorreu um erro! Tente mais tarde.");
+                    console.log(err);
+                }).finally(() => {
+                    this.loading = false;
+                });
+            } else {
+                alert("A palavra-passe deve conter pelo menos 6 caracteres!");
+            }
+            
             
             
         }

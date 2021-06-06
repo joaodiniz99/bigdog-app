@@ -34,7 +34,6 @@
                     id="input-2"
                     v-model="form.password"
                     type="password"
-                    min="6"
                     required
                     ></b-form-input>
                 </b-form-group>
@@ -75,20 +74,25 @@ export default {
     },
     methods: {
         register() {
-            this.loading = true;
-            this.$store.dispatch('register', {
-                email: this.form.email,
-                password: this.form.password,
-                returnSecureToken: true
-            }).then(() => {
-                Notify.Success("Conta criada com sucesso. Sessão iniciada!");
-                this.$router.back();
-            }).catch(err => {
-                Notify.Failure("Ocorreu um erro! Tente mais tarde.");
-                console.log(err);
-            }).finally(() => {
-                this.loading = false;
-            });
+            if(this.form.password.length >= 6) {
+                this.loading = true;
+                this.$store.dispatch('register', {
+                    email: this.form.email,
+                    password: this.form.password,
+                    returnSecureToken: true
+                }).then(() => {
+                    Notify.Success("Conta criada com sucesso. Sessão iniciada!");
+                    this.$router.back();
+                }).catch(err => {
+                    Notify.Failure("Ocorreu um erro! Tente mais tarde.");
+                    console.log(err);
+                }).finally(() => {
+                    this.loading = false;
+                });
+            } else {
+                alert("A palavra-passe deve conter pelo menos 6 caracteres!");
+            }
+            
         }
     }
 }

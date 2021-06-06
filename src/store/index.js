@@ -3,7 +3,6 @@ import Vuex from 'vuex'
 import DogService from '../services/DogService';
 import Notify from '../configs/nofiflix.config';// configurações do pacote de notificações
 import axios from 'axios';
-import router from '../router';
 
 Vue.use(Vuex)
 
