@@ -55,12 +55,13 @@ export default new Vuex.Store({
         .then(({ data }) => {
           commit('SET_USER', data);
           localStorage.setItem('user', JSON.stringify(data));
+          dispatch('fetchFavorites');
         });
     },
     logout({ commit }) {
       commit('CLEAR_USER');
     },
-    fetchFavorites({ commit, state }) {
+    fetchFavorites({ commit }) {
       axios.get('https://bigdog-app-default-rtdb.europe-west1.firebasedatabase.app/favorites/.json')
         .then(({ data }) => {
           // console.log(data);
