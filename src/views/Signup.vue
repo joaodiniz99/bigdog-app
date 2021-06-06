@@ -11,7 +11,7 @@
             </b-col>
         </b-row>
         <b-row class="d-flex justify-content-center mt-4">
-            <b-form @submit.prevent="criarConta">
+            <b-form @submit.prevent="register">
                 <b-form-group
                     id="input-group-1"
                     label="Email:"
@@ -34,6 +34,7 @@
                     id="input-2"
                     v-model="form.password"
                     type="password"
+                    min="6"
                     required
                     ></b-form-input>
                 </b-form-group>
@@ -51,7 +52,7 @@
         </b-row>
         <b-row>
             <b-col class="text-center" style="color: white;">
-                <p>Já possui conta? <router-link to="/login">Iniciar Sessão</router-link></p>
+                <p>Já possui conta? <router-link to="/login" class="text-warning">Iniciar Sessão</router-link></p>
             </b-col>
         </b-row>
     </b-container>
@@ -73,30 +74,21 @@ export default {
         }
     },
     methods: {
-        criarConta() {
+        register() {
             this.loading = true;
-            axios.post('https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyCqzbIw1no8yqShY7YErnWuBeaQzvElGS8', {
+            this.$store.dispatch('register', {
                 email: this.form.email,
                 password: this.form.password,
                 returnSecureToken: true
-            })
-                .then(user => {
-                    Notify.Success("Conta criada com sucesso!");
-                    this.$store.commit('SET_USER', {
-                        user: user.data
-                    });
-                    this.$router.push('racas');
-                    console.log(user.data);
-                })
-                .catch(err => {
-                    Notify.Failure("Ocorreu um erro na criação da conta. Tente mais tarde!");
-                    console.log(err);
-                })
-                .finally(() => {
-                    this.loading = false;
-                    this.form.email = '';
-                    this.form.password = '';
-                });
+            }).then(() => {
+                Notify.Success("Conta criada com sucesso. Sessão iniciada!");
+                this.$router.back();
+            }).catch(err => {
+                Notify.Failure("Ocorreu um erro! Tente mais tarde.");
+                console.log(err);
+            }).finally(() => {
+                this.loading = false;
+            });
         }
     }
 }

@@ -16,9 +16,12 @@ export default {
     img: String,
   },
   methods: {
+    // sendFavorite(img) {
+    //   this.$store.dispatch("toggleFavorite", img);
+    // },
     sendFavorite(img) {
-      this.$store.dispatch("toggleFavorite", img);
-    },
+      this.$store.dispatch('toggleFavorite', img);
+    }
   },
   computed: {
     isFavorite() {

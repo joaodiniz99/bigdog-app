@@ -2,6 +2,8 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import DogService from '../services/DogService';
 import Notify from '../configs/nofiflix.config';// configurações do pacote de notificações
+import axios from 'axios';
+import router from '../router';
 
 Vue.use(Vuex)
 
@@ -15,24 +17,57 @@ export default new Vuex.Store({
     SET_DOGS(state, payload) {
       state.dogs = payload.dogs;
     },
-    SET_FAVORITE(state, payload) {
-      state.favorites.unshift(payload.img);
-      localStorage.setItem('favsInfo', JSON.stringify(state.favorites));
+    SET_FAVORITE(state, favorite) {
+      state.favorites.unshift(favorite);
+      // localStorage.setItem('favsInfo', JSON.stringify(state.favorites));
       Notify.Success("Cão adicionado aos favoritos!");
     },
-    REMOVE_FAVORITE(state, payload) {
-      state.favorites.splice(payload.index, 1);
-      localStorage.setItem('favsInfo', JSON.stringify(state.favorites));
+    SET_FAVORITES(state, favorites) {
+      state.favorites = favorites;
+    },
+    REMOVE_FAVORITE(state, index) {
+      state.favorites.splice(index, 1);
+      // localStorage.setItem('favsInfo', JSON.stringify(state.favorites));
       Notify.Success("Cão removido dos favoritos!");
     },
-    START_FAVORITES(state, payload) {
-      state.favorites = payload.favorites;
+    // START_FAVORITES(state, favorites) {
+    //   state.favorites = favorites;
+    // },
+    SET_USER(state, userData) {
+      state.user = userData;
     },
-    SET_USER(state, payload) {
-      state.user = payload.user;
+    CLEAR_USER(/*state*/) {
+      // state.user = null;
+      localStorage.removeItem('user');
+      location.reload();// serve para limpar o header do axios(se usar token no header) e para limpar a store(por exemplo o user e os favoritos)
     }
   },
   actions: {
+    login({ commit, dispatch }, credentials) {
+      return axios.post('https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyCqzbIw1no8yqShY7YErnWuBeaQzvElGS8', credentials)
+        .then(({ data }) => {
+          commit('SET_USER', data);
+          localStorage.setItem('user', JSON.stringify(data));
+          dispatch('fetchFavorites');
+        });
+    },
+    register({ commit }, credentials) {
+      return axios.post('https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyCqzbIw1no8yqShY7YErnWuBeaQzvElGS8', credentials)
+        .then(({ data }) => {
+          commit('SET_USER', data);
+          localStorage.setItem('user', JSON.stringify(data));
+        });
+    },
+    logout({ commit }) {
+      commit('CLEAR_USER');
+    },
+    fetchFavorites({ commit, state }) {
+      axios.get('https://bigdog-app-default-rtdb.europe-west1.firebasedatabase.app/favorites/.json')
+        .then(({ data }) => {
+          // console.log(data);
+          commit('SET_FAVORITES', data);
+        });
+    },
     setDogs({ commit }) {
       const dogsLocalStorage = localStorage.getItem('dogsInfo');
       if (!dogsLocalStorage) {
@@ -51,29 +86,45 @@ export default new Vuex.Store({
         });
       }
     },
-    setFavorites({ commit }) {
-      const favoritesLocalStorage = localStorage.getItem('favsInfo');
-      if(!favoritesLocalStorage) {
-        localStorage.setItem('favsInfo', '[]');
-      } else {
-        commit('START_FAVORITES', {
-          favorites: JSON.parse(favoritesLocalStorage)
-        });
-      }
+    // setFavorites({ commit }) {
+    //   const favoritesLocalStorage = localStorage.getItem('favsInfo');
+    //   if(!favoritesLocalStorage) {
+    //     localStorage.setItem('favsInfo', '[]');
+    //   } else {
+    //     commit('START_FAVORITES', {
+    //       favorites: JSON.parse(favoritesLocalStorage)
+    //     });
+    //   }
+    // },
+    updateFavorites({ state }) {
+      axios.put('https://bigdog-app-default-rtdb.europe-west1.firebasedatabase.app/favorites.json?auth='+state.user.idToken, [...state.favorites]);
     },
-    toggleFavorite({ commit, state }, img) {
-      
-      if(!state.favorites.includes(img)) {// se a imagem n existir dentro dos favoritos, ele acrescenta
+    toggleFavorite({ commit, dispatch, state }, img) {
+      if(!state.favorites.some(favorite => favorite.img == img)) {
         commit('SET_FAVORITE', {
+          email: state.user.email,
           img: img
         });
-      } else {// se a imagem existir dentro dos favoritos, ele remove
-        const index = state.favorites.indexOf(img);
-        commit('REMOVE_FAVORITE', {
-          index: index
+        dispatch('updateFavorites');
+      } else {
+        let i = 0;
+        state.favorites.forEach((fav, index) => {
+          if(fav && fav.img == img) 
+            i = index;
         });
+        commit('REMOVE_FAVORITE', i);
+        dispatch('updateFavorites');
+          /*
+        axios.delete('https://bigdog-app-default-rtdb.europe-west1.firebasedatabase.app/favorites/'+i+'.json?auth='+state.user.idToken)
+          .then((res) => {
+            dispatch('fetchFavorites');
+            Notify.Success("Cão removido dos favoritos!");
+          })
+          .catch(err => {
+            Notify.Failure("Ocorreu um erro ao remover o cão dos favoritos. Tente mais tarde.");
+            console.log("Erro", err);
+          });*/
       }
-      
     }
   },
   modules: {
@@ -83,10 +134,17 @@ export default new Vuex.Store({
       return state.dogs;
     },
     getFavorites: state => {
-      return state.favorites;
+      return state.favorites.filter(favorite => {
+        if(favorite && state.user.email == favorite.email) {
+          return favorite;
+        }
+      });
     },
     getFavorite: state => img => {
-      return state.favorites.includes(img) ? true : false;
+      return state.favorites.some(favorite => (favorite && favorite.img == img && favorite.email == state.user.email));
+    },
+    isLoggedIn: state => {
+      return !!state.user;
     }
   }
 })

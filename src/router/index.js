@@ -7,8 +7,6 @@ import Notify from '../configs/nofiflix.config'// configurações do pacote de n
 
 Vue.use(VueRouter)
 
-import store from '../store'
-
 const routes = [
   {
     path: '/',
@@ -24,14 +22,7 @@ const routes = [
     path: '/racas/:id',
     name: 'breed',
     component: () => import(/* webpackChunkName: "breed" */ '../views/Breed.vue'),
-    beforeEnter: (to, from, next) => {
-      if(!store.state.user) {
-        next('/login');
-        Notify.Failure("É necessário ter a sessão iniciada para aceder às imagens.");
-      } else {
-        next();
-      }
-    }
+    meta: { requiresAuth: true }
   },
   {
     path: '/contactos',
@@ -41,17 +32,20 @@ const routes = [
   {
     path: '/favoritos',
     name: 'favorites',
-    component: () => import(/* webpackChunkName: "favorites" */ '../views/Favorites.vue')
+    component: () => import(/* webpackChunkName: "favorites" */ '../views/Favorites.vue'),
+    meta: { requiresAuth: true }
   },
   {
     path: '/login',
     name: 'login',
-    component: () => import(/* webpackChunkName: "auth" */ '../views/Login.vue')
+    component: () => import(/* webpackChunkName: "auth" */ '../views/Login.vue'),
+    meta: { isLog: true }
   },
   {
     path: '/signup',
     name: 'signup',
-    component: () => import(/* webpackChunkName: "auth" */ '../views/Signup.vue')
+    component: () => import(/* webpackChunkName: "auth" */ '../views/Signup.vue'),
+    meta: { isLog: true }
   },
   {
     path: '*',
@@ -65,5 +59,18 @@ const router = new VueRouter({
   base: process.env.BASE_URL,
   routes
 })
+
+router.beforeEach((to, from, next) => {
+  const loggedIn = localStorage.getItem('user');
+
+  if((to.matched.some(record => record.meta.requiresAuth) && !loggedIn)) {
+    next('/login');
+    Notify.Failure("É necessário ter a sessão iniciada para aceder à página anterior.");
+  } else if(to.matched.some(record => record.meta.isLog && loggedIn)) {
+    next('/');
+  } else {
+    next();
+  }
+});
 
 export default router

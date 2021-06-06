@@ -11,7 +11,7 @@
             </b-col>
         </b-row>
         <b-row class="d-flex justify-content-center mt-4">
-            <b-form @submit.prevent="iniciarSessao">
+            <b-form @submit.prevent="login">
                 <b-form-group
                     id="input-group-1"
                     label="Email:"
@@ -51,7 +51,7 @@
         </b-row>
         <b-row>
             <b-col class="text-center" style="color: white;">
-                <p>Não tem conta? <router-link to="/signup">Criar Conta</router-link></p>
+                <p>Não tem conta? <router-link to="/signup" class="text-warning">Criar Conta</router-link></p>
             </b-col>
         </b-row>
     </b-container>
@@ -73,30 +73,23 @@ export default {
         }
     },
     methods: {
-        iniciarSessao() {
+        login() {
             this.loading = true;
-            axios.post('https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyCqzbIw1no8yqShY7YErnWuBeaQzvElGS8', {
+            this.$store.dispatch('login', {
                 email: this.form.email,
                 password: this.form.password,
                 returnSecureToken: true
-            })
-                .then(user => {
-                    Notify.Success("Sessão iniciada com sucesso!");
-                    this.$store.commit('SET_USER', {
-                        user: user.data
-                    });
-                    this.$router.push('racas');
-                    console.log(user.data);
-                })
-                .catch(err => {
-                    Notify.Failure("Ocorreu um erro ao iniciar sessão. Tente mais tarde!");
-                    console.log(err);
-                })
-                .finally(() => {
-                    this.loading = false;
-                    this.form.email = '';
-                    this.form.password = '';
-                });
+            }).then(() => {
+                Notify.Success("Sessão iniciada com sucesso!");
+                this.$router.back();
+            }).catch(err => {
+                Notify.Failure("Ocorreu um erro! Tente mais tarde.");
+                console.log(err);
+            }).finally(() => {
+                this.loading = false;
+            });
+            
+            
         }
     }
 }

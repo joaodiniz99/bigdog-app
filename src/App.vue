@@ -11,10 +11,6 @@ import TheNavbar from '@/components/TheNavbar.vue';
 export default {
   components: {
     TheNavbar
-  },
-  created() {
-    this.$store.dispatch('setDogs');
-    this.$store.dispatch('setFavorites');
   }
 }
 </script>

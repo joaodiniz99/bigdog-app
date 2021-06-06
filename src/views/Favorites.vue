@@ -4,7 +4,7 @@
             <DogCardFavorite
                 v-for="(favorite, index) in favorites"
                 :key="index"
-                :img="favorite"
+                :img="favorite.img"
             />
         </b-row>
         <b-row class="my-5" v-else>
@@ -37,5 +37,14 @@ export default {
 </script>
 
 <style scoped>
+#loading {
+  text-align: center;
+  height: 50vh;
+  width: 99vw;
+}
 
+#loading span {
+  position: absolute;
+  top: 50%;
+}
 </style>

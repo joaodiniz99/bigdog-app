@@ -25,11 +25,14 @@
         <router-link to="/" class="nav-link nav-item">Inicio</router-link>
         <router-link to="/racas" class="nav-link nav-item">Raças</router-link>
         <!-- <router-link to="/galeria" class="nav-link nav-item">Galeria</router-link> -->
-        <router-link to="/favoritos" class="nav-link nav-item">Favoritos</router-link>
+        <router-link v-if="isLoggedIn" to="/favoritos" class="nav-link nav-item">Favoritos</router-link>
         <router-link to="/contactos" class="nav-link nav-item">Contactos</router-link>
-        <router-link to="/login" class="nav-link nav-item">Iniciar Sessão</router-link>
+        <router-link v-if="!isLoggedIn" to="/login" class="nav-link nav-item">Iniciar Sessão</router-link>
+        <template v-else>
+          <button @click="logout" class="nav-link nav-item logout">Terminar Sessão</button>
+        </template>
 
-        <b-dropdown
+        <!-- <b-dropdown
           v-if="favLength"
           :lazy="true"
           size="sm"
@@ -52,14 +55,7 @@
               <b-icon icon="x-circle-fill" scale="1.5" variant="danger" class="favCloseBtn" @click="removeFavorite(favorite)"></b-icon>
             </b-col>
           </b-row>
-        </b-dropdown>
-        <!-- <b-nav-item-dropdown right>
-                    <template #button-content>
-                        <em>User</em>
-                    </template>
-                    <b-dropdown-item href="#">Profile</b-dropdown-item>
-                    <b-dropdown-item href="#">Sign Out</b-dropdown-item>
-                </b-nav-item-dropdown> -->
+        </b-dropdown> -->
       </b-navbar-nav>
     </b-collapse>
   </b-navbar>
@@ -72,6 +68,9 @@ export default {
     removeFavorite(img) {
       this.$store.dispatch("toggleFavorite", img);
     },
+    logout() {
+      this.$store.dispatch('logout');
+    }
   },
   computed: {
     favorites() {
@@ -79,7 +78,10 @@ export default {
     },
     favLength() {
       return this.favorites.length > 0 ? true : false;
-    }
+    },
+    isLoggedIn() {
+      return this.$store.getters.isLoggedIn;
+    } 
   },
 };
 </script>
@@ -197,4 +199,19 @@ export default {
 
   cursor: pointer;
 }
+
+/*
+ * Logout button color
+ */
+.logout {
+  background-color: transparent;
+  color: red !important;
+}
+
+.logout:hover {
+  background-color: red;
+  color: white !important;
+}
+
+
 </style>
