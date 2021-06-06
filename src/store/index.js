@@ -50,7 +50,7 @@ export default new Vuex.Store({
           dispatch('fetchFavorites');
         });
     },
-    register({ commit }, credentials) {
+    register({ commit, dispatch }, credentials) {
       return axios.post('https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyCqzbIw1no8yqShY7YErnWuBeaQzvElGS8', credentials)
         .then(({ data }) => {
           commit('SET_USER', data);
